@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pizarra</title>
+</head>
+
+<div class="divHerramientas">
+    <div class="divColor">
+        <label for="colorPicker" class="imgContainer">
+            <img class="imgPaint" src="./img/paintbrush-solid.svg" alt="Pincel">
+            <input type="color" class="colorChoose" id="colorPicker">
+        </label>
+    </div>
+    <img class="imgErase" src="./img/eraser-solid.svg" alt="Borrar" id="eraseButton">
+</div>
+
+<body>
+
+    <canvas class="canvas" id="canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+.canvas {
+    background-color: white;
+    width: 100%;
+    margin: 0;
+    height: 97vh;
+    border: 5px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divColor {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgPaint,
+.imgErase {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.colorChoose {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.divHerramientas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
