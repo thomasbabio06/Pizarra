@@ -8,20 +8,36 @@
     <title>Pizarra</title>
 </head>
 
-<div class="divHerramientas">
-    <div class="divColor">
-        <label for="colorPicker" class="imgContainer">
-            <img class="imgPaint" src="./img/paintbrush-solid.svg" alt="Pincel">
-            <input type="color" class="colorChoose" id="colorPicker">
-        </label>
-    </div>
-    <img class="imgErase" src="./img/eraser-solid.svg" alt="Borrar" id="eraseButton">
-</div>
-
 <body>
+    <div class="divHerramientas">
+        <div class="divColor">
+            <label for="color" class="imgContainer">
+                <input type="color" class="colorChoose" id="colorPicker">
+                <img class="imgPaint" src="./img/paintbrush-solid.svg" alt="Pincel" id="color">
+            </label>
+        </div>
+
+        <div class="divVoid">
+            <img class="imgVoid" src="./img/eraser-solid.svg" alt="Reset" id="resetButton">
+        </div>
+
+        <div class="divImagen">
+            <label for="imagePicker" class="imgContainer">
+                <img class="imgLink" src="./img/link-solid.svg" alt="Imagen" id="imgButton">
+            </label>
+            <input type="file" class="ImageChoose" id="imagePicker" accept="image/*" style="display: none;">
+        </div>
+
+        <img class="imgErase" src="./img/rotate-right-solid.svg" alt="Borrar" id="eraseButton">
+
+        <div class="divSave">
+            <img class="imgSave" src="./img/floppy-disk-solid.svg" alt="Guardar" id="saveButton">
+        </div>
+    </div>
 
     <canvas class="canvas" id="canvas"></canvas>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 </body>
 
