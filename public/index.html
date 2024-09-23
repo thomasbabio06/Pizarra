@@ -19,6 +19,7 @@
 
         <div class="divVoid">
             <img class="imgVoid" src="./img/eraser-solid.svg" alt="Reset" id="resetButton">
+            <span class="tooltip">Goma de Borrar</span>
         </div>
 
         <div class="divImagen">
@@ -28,17 +29,20 @@
             <input type="file" class="ImageChoose" id="imagePicker" accept="image/*" style="display: none;">
         </div>
 
+        <img class="imgFill" src="./img/bucket-solid.svg" alt="Rellenar" id="fillButton">
+
         <img class="imgErase" src="./img/rotate-right-solid.svg" alt="Borrar" id="eraseButton">
 
         <div class="divSave">
             <img class="imgSave" src="./img/floppy-disk-solid.svg" alt="Guardar" id="saveButton">
         </div>
+
     </div>
 
     <canvas class="canvas" id="canvas"></canvas>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 
 </html>
