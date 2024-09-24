@@ -59,25 +59,3 @@
     justify-items: center;
 
 }
-
-.divVoid {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip {
-    visibility: hidden;
-    width: 120px; /* Ancho del tooltip */
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%; /* Posición del tooltip */
-    left: 50%;
-    margin-left: -60px; /* Centrar el tooltip */
-    opacity: 0;
-    transition: opacity 0.3s;
-}

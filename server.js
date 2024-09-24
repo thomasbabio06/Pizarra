@@ -27,6 +27,11 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('imageUpload', imgData);
     });
 
+    socket.on('backgroundChange', (selectedColor) => {
+        console.log(`Color de fondo recibido: ${selectedColor}`);
+        socket.broadcast.emit('backgroundChange', selectedColor);
+    });
+
     socket.on('disconnect', () => {
         console.log('Un cliente se ha desconectado');
     });

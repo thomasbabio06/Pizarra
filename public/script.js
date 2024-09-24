@@ -2,52 +2,33 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
 let painting = false;
-let startX, startY; // Para almacenar la posición de inicio del mouse
-let isFilling = false; // Para saber si estamos en modo de rellenar
-
-const socket = io();
 let currentColor = '#000000';
+const socket = io();
 
-canvas.addEventListener('mousedown', startPosition);
-canvas.addEventListener('mouseup', endPosition);
-canvas.addEventListener('mousemove', draw);
+let prevX = 0;
+let prevY = 0;
 
-function startPosition(e) {
-    if (isFilling) {
-        startX = e.clientX - canvas.getBoundingClientRect().left;
-        startY = e.clientY - canvas.getBoundingClientRect().top;
-    } else {
-        painting = true;
-        draw(e);
-    }
-}
+canvas.addEventListener('mousedown', (e) => {
+    painting = true;
+    const rect = canvas.getBoundingClientRect();
+    prevX = e.clientX - rect.left;
+    prevY = e.clientY - rect.top;
+    draw(e); 
+});
 
-function endPosition(e) {
-    if (isFilling) {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+canvas.addEventListener('mouseup', () => {
+    painting = false;
+    ctx.beginPath(); 
+});
 
-        // Calculamos el ancho y alto del cuadrado
-        const width = x - startX;
-        const height = y - startY;
-
-        // Rellenar el cuadrado
-        ctx.fillStyle = currentColor;
-        ctx.fillRect(startX, startY, width, height);
-        
-        // Emitimos el evento para que otros usuarios vean el cuadrado
-        socket.emit('fillRect', { startX, startY, width, height, color: currentColor });
-    } else {
-        painting = false;
-        ctx.beginPath();
-    }
-}
+canvas.addEventListener('mousemove', (e) => {
+    if (!painting) return;
+    draw(e);
+});
 
 function draw(e) {
-    if (!painting || isFilling) return;
-
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -56,31 +37,50 @@ function draw(e) {
     ctx.lineCap = 'round';
     ctx.strokeStyle = currentColor;
 
+    ctx.beginPath();
+    ctx.moveTo(prevX, prevY);
     ctx.lineTo(x, y);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
 
-    socket.emit('draw', { x, y, color: currentColor });
+    socket.emit('draw', { prevX, prevY, x, y, color: currentColor });
+
+    prevX = x;
+    prevY = y;
 }
 
 socket.on('draw', (data) => {
     ctx.lineWidth = 5;
     ctx.lineCap = 'round';
     ctx.strokeStyle = data.color;
+
+    ctx.beginPath();
+    ctx.moveTo(data.prevX, data.prevY); 
     ctx.lineTo(data.x, data.y);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(data.x, data.y);
 });
 
-// Función para el botón de rellenar
+
+socket.on('draw', (data) => {
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = data.color;
+
+    ctx.beginPath();
+    ctx.moveTo(data.prevX, data.prevY);
+    ctx.lineTo(data.x, data.y); 
+    ctx.stroke();
+});
+
 document.getElementById('fillButton').addEventListener('click', () => {
-    isFilling = !isFilling; // Alternar entre modo de rellenar y modo de dibujo
-    if (isFilling) {
-        // Cambiar el color al hacer clic en el botón
-        currentColor = document.getElementById('colorPicker').value; 
-    }
+    const selectedColor = document.getElementById('colorPicker').value;
+    ctx.fillStyle = selectedColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    socket.emit('backgroundChange', selectedColor); 
+});
+
+socket.on('backgroundChange', (color) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
 document.getElementById('resetButton').addEventListener('click', () => {
@@ -108,7 +108,6 @@ socket.on('colorChange', (color) => {
     currentColor = color;
 });
 
-// Manejar la subida de imágenes
 document.getElementById('imagePicker').addEventListener('change', function (event) {
     const file = event.target.files[0];
     if (file) {
@@ -119,8 +118,13 @@ document.getElementById('imagePicker').addEventListener('change', function (even
             img.src = e.target.result;
 
             img.onload = function () {
+                // Limpiar el canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Ajustar imagen al tamaño del canvas
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Emitir la imagen al servidor
                 socket.emit('imageUpload', e.target.result); 
             };
         };
@@ -129,26 +133,22 @@ document.getElementById('imagePicker').addEventListener('change', function (even
     }
 });
 
+
 socket.on('imageUpload', (imgData) => {
     const img = new Image();
     img.src = imgData;
 
     img.onload = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const x = (canvas.width - img.width) / 2;
+        const y = (canvas.height - img.height) / 2;
+        ctx.drawImage(img, x, y);
     };
 });
 
-// Manejando la función de borrado
 document.getElementById('eraseButton').addEventListener('click', () => {
     currentColor = '#FFFFFF';
     socket.emit('colorChange', currentColor); 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     socket.emit('clear'); 
-});
-
-// Escuchar el evento de llenado de rectángulo
-socket.on('fillRect', (data) => {
-    ctx.fillStyle = data.color;
-    ctx.fillRect(data.startX, data.startY, data.width, data.height);
 });
