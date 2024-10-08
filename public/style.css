@@ -21,7 +21,8 @@
 .imgLink,
 .imgVoid,
 .imgSave,
-.imgFill {
+.imgFill,
+.dropdownItem {
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -30,10 +31,11 @@
 
 .colorChoose {
     position: absolute;
-    width: 100%;
+    width: 50%;
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    margin-left: 20px;
 }
 
 .imageChoose {
@@ -57,5 +59,46 @@
     justify-content: center;
     align-items: center;
     justify-items: center;
+}
 
+.dropdownContent {
+    margin-top: 195px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdownContent .dropdownItem {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    padding: 5px 16px;
+    cursor: pointer;
+}
+
+.dropdownContent .dropdownItem:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+.dropdownItem.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.dropdownBtn{
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
 }
