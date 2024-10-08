@@ -17,12 +17,11 @@
             </label>
             <button id="dropdownButton" class="dropdownBtn">▼</button>
             <div id="dropdownMenu" class="dropdownContent">
-                <img src="./img/paintbrush-solid.svg" alt="Opción 1" class="dropdownItem" id="option1">
+                <img src="./img/paintbrush-solid.svg" alt="Opción 1" class="dropdownItem" id="option1" selected>
                 <img src="./img/pen-nib-solid.svg" alt="Opción 2" class="dropdownItem" id="option2">
-                <img src="./img/spray-can-solid.svg" alt="Opción 3" class="dropdownItem" id="option3">
-            </div>      
+            </div>
         </div>
-
+        
         <div class="divVoid">
             <img class="imgVoid" src="./img/eraser-solid.svg" alt="Reset" id="resetButton">
         </div>
@@ -49,7 +48,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/script.js"></script>
     <script>
-        // Funcionalidad del menú desplegable
         const dropdownButton = document.getElementById('dropdownButton');
         const dropdownMenu = document.getElementById('dropdownMenu');
 
@@ -57,8 +55,7 @@
             dropdownMenu.classList.toggle('show');
         });
 
-        // Cerrar el menú si se hace clic fuera de él
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (!event.target.matches('.dropdownBtn')) {
                 if (dropdownMenu.classList.contains('show')) {
                     dropdownMenu.classList.remove('show');

@@ -5,7 +5,7 @@ canvas.height = window.innerHeight;
 
 let painting = false;
 let currentColor = '#000000';
-let lineWidth = 5; 
+let lineWidth = 5;
 const socket = io();
 
 let prevX = 0;
@@ -33,12 +33,12 @@ canvas.addEventListener('mousemove', (e) => {
     if (currentColor === '#FF0000') {
         drawFineLine(x, y);
     } else {
-        drawLine(x, y); 
+        drawLine(x, y);
     }
 });
 
 function drawLine(x, y) {
-    ctx.lineWidth = lineWidth; 
+    ctx.lineWidth = lineWidth;
     ctx.lineCap = 'round';
     ctx.strokeStyle = currentColor;
 
@@ -174,10 +174,9 @@ dropdownItems.forEach(item => {
         } else if (item.id === 'option2') {
             currentColor = color;
             lineWidth = 2;
-        } else if (item.id === 'option3') {
-            currentColor = color;
         }
 
         dropdownMenu.classList.remove('show');
     });
 });
+
