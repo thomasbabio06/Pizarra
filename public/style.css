@@ -114,6 +114,10 @@
 
 .bodyIndex {
     background: rgb(255, 255, 255);
+    background-image: url(./img/images.png);
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position-x: 50%;
 }
 
 .druow {
@@ -122,8 +126,8 @@
     cursor: pointer;
     transition: .3s linear;
     color: transparent;
-    -webkit-text-stroke: 2px red;
-    background-image: linear-gradient(to left, red, rgb(226, 33, 33), rgb(255, 255, 255), rgb(255, 255, 255));
+    -webkit-text-stroke: 2px rgb(0, 0, 0);
+    background-image: linear-gradient(to left, red, red, rgb(255, 255, 255), rgb(255, 255, 255));
     background-size: 200%;
     -webkit-background-clip: text;
     animation: move 30s linear infinite;
@@ -137,7 +141,7 @@
 
 .druow:hover {
     color: red;
-    text-shadow: 0 0 10px rgba(255, 0, 0, .5) 0 0 20px rgba(255, 0, 0, .5) 0 0 40px rgba(255, 0, 0, .5) 0 0 80px rgba(255, 0, 0, .5) 0 0 160px rgba(255, 0, 0, .5) 0 0 320px rgba(255, 0, 0, .5);
+    text-shadow: 0 0 10px rgba(0, 0, 0, .5) 0 0 20px rgba(0, 0, 0, .5) 0 0 40px rgba(0, 0, 0, .5) 0 0 80px rgba(0, 0, 0, .5) 0 0 160px rgba(0, 0, 0, .5) 0 0 320px rgba(0, 0, 0, .5);
 }
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:900i');
@@ -217,10 +221,10 @@ path.two {
 
 @keyframes color_anim {
     0% {
-        fill: white;
+        fill: rgb(0, 0, 0);
     }
     50% {
-        fill: #FBC638;
+        fill: #ff0000;
     }
     100% {
         fill: white;
