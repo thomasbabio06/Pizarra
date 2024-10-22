@@ -23,7 +23,8 @@
 .imgSave,
 .imgFill,
 .dropdownItem,
-.imgSelect {
+.imgSelect,
+.imgGrid {
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -229,4 +230,13 @@ path.two {
     100% {
         fill: white;
     }
+}
+
+.canvas {
+    background-color: white;
+    border: 5px solid grey;
+}
+
+.wrapper{
+    margin-bottom: 15px;
 }

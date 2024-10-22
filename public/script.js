@@ -10,6 +10,7 @@ const socket = io();
 
 let prevX = 0;
 let prevY = 0;
+let gridVisible = false; // Variable para rastrear el estado de la cuadrícula
 
 canvas.addEventListener('mousedown', (e) => {
     painting = true;
@@ -180,3 +181,34 @@ dropdownItems.forEach(item => {
     });
 });
 
+let savedImageData;
+
+function toggleGrid() {
+    const gridSize = 36; 
+    ctx.strokeStyle = 'grey';
+    ctx.lineWidth = 1;
+
+    if (gridVisible) {
+        ctx.putImageData(savedImageData, 0, 0);
+        gridVisible = false;
+    } else {
+        savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let x = 0; x <= canvas.width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+            ctx.stroke();
+        }
+
+        for (let y = 0; y <= canvas.height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+        }
+
+        gridVisible = true;
+    }
+}
+
+document.getElementById('gridButton').addEventListener('click', toggleGrid);
